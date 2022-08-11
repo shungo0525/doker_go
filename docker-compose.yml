@@ -1,0 +1,15 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    # platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+    volumes:
+      - ./001.sql:/001.sql
+    mem_limit: 512M
+    cpus: 0.5
+    cap_add:
+      - SYS_NICE # CAP_SYS_NICE
