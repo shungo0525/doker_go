@@ -9,5 +9,14 @@ services:
       MYSQL_ROOT_PASSWORD: password
     # 文字化け対応
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    # 永続化
+    volumes:
+      - mysql-development:/var/lib/mysql
+      # - ./data:/var/lib/mysql -> ローカルにdataディレクトリが作成される
     ports:
       - 3308:3306
+
+# volumeに名前をつける
+volumes:
+  mysql-development:
+    name: mysql-development
