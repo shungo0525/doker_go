@@ -36,3 +36,16 @@ FROM
   - https://qiita.com/jas/items/0ffe72a96c3f8b6cf6dc
 - 1万件のデータ作成 (直積)
   - https://qiita.com/cobot00/items/8d59e0734314a88d74c7
+
+## Golang
+- コンテナに入る
+
+```
+% docker-compose exec app sh
+```
+
+- main.goを実行
+
+```
+% docker-compose exec app go run main.go
+```
