@@ -11,7 +11,8 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     # 永続化
     volumes:
-      - mysql-development:/var/lib/mysql
+      - mysql-go:/var/lib/mysql
+      - ./initsql:/docker-entrypoint-initdb.d
       # - ./data:/var/lib/mysql -> ローカルにdataディレクトリが作成される
     ports:
       - 3308:3306
@@ -25,5 +26,5 @@ services:
 
 # volumeに名前をつける
 volumes:
-  mysql-development:
-    name: mysql-development
+  mysql-go:
+    name: mysql-go

@@ -27,7 +27,7 @@ FROM
 
 ```
 % docker-compose exec mysql bash
-> mysql -uroot -ppassword m1_db < 001.sql
+> mysql -uroot -ppassword development < init.sql
 ```
 
 - add column

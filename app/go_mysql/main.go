@@ -18,6 +18,7 @@ func main() {
 	// 接続が終了したらクローズする
 	defer db.Close()
 
+
 	if err != nil {
 			fmt.Println(err.Error())
 	}
