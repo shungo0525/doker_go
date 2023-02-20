@@ -8,3 +8,6 @@ RUN mkdir /go/src/app
 WORKDIR /go/src/app
 # ホストのファイルをコンテナの作業ディレクトリに移行
 ADD . /go/src/app
+
+# apiサーバー起動
+CMD ["go", "run", "api/main.go"]

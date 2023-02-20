@@ -1,3 +1,11 @@
+## APIサーバー起動
+- コンテナ内で下記のコマンドを実行
+- `http://localhost:8000`
+
+```
+go run api/main.go 
+```
+
 ## Golang
 - コンテナに入る
 

@@ -23,6 +23,8 @@ services:
       - ./app:/go/src/app
     depends_on:
       - mysql
+    ports:
+      - 8000:8000
 
 # volumeに名前をつける
 volumes:
