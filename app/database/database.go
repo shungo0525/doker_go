@@ -5,7 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	gorm "github.com/jinzhu/gorm"
 
-	"app/api/gorm/models"
+	"app/models"
 )
 
 func InitDB() *gorm.DB {

@@ -8,7 +8,7 @@ import (
   _ "github.com/go-sql-driver/mysql"
 
   "app/database"
-  "app/api/gorm/models"
+  "app/models"
 )
 
 func main() {
