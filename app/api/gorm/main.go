@@ -4,17 +4,14 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	gorm "github.com/jinzhu/gorm"
-)
 
-type User struct {
-	Id   int    `gorm:"column:id"`
-	Name string `gorm:"column:name"`
-}
+	"example/api/gorm/models"
+)
 
 func main() {
 	db := initDB()
 
-	var users []User
+	var users []model.User
 	db.Find(&users)
 
 	fmt.Println(users)
