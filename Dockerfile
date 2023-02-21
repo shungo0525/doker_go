@@ -10,4 +10,4 @@ WORKDIR /go/src/app
 ADD . /go/src/app
 
 # apiサーバー起動
-CMD ["go", "run", "controllers/controller.go"]
+CMD ["go", "run", "server/main.go"]

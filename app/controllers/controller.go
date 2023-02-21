@@ -1,8 +1,7 @@
-package main
+package controllers
 
 import (
   "fmt"
-  "log"
   "net/http"
   "encoding/json"
   _ "github.com/go-sql-driver/mysql"
@@ -11,19 +10,10 @@ import (
   "app/models"
 )
 
-func main() {
-  handleRequests()
-}
-
-func handleRequests() {
+func HandleRequests() {
   http.HandleFunc("/", homePage)
   http.HandleFunc("/user", userPage)
   http.HandleFunc("/db_check", dbCheck)
-
-  err := http.ListenAndServe(":8000", nil)
-  if err != nil {
-    log.Fatal(err)
-  }
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){
