@@ -5,7 +5,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	gorm "github.com/jinzhu/gorm"
 
-	"example/api/gorm/models"
+	"app/api/gorm/models"
 )
 
 func main() {
