@@ -10,13 +10,12 @@ import (
 
 func main() {
 	db := initDB()
+	defer db.Close()
 
 	var users []model.User
 	db.Find(&users)
 
 	fmt.Println(users)
-
-	defer db.Close()
 }
 
 func initDB() *gorm.DB {
