@@ -4,8 +4,6 @@ import (
   "fmt"
   "log"
   "net/http"
-  _ "github.com/go-sql-driver/mysql"
-  gorm "github.com/jinzhu/gorm"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request){
