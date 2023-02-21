@@ -8,12 +8,14 @@ import (
 
   "app/database"
   "app/models"
+  "app/mail"
 )
 
 func HandleRequests() {
   http.HandleFunc("/", homePage)
   http.HandleFunc("/user", userPage)
   http.HandleFunc("/db_check", dbCheck)
+  http.HandleFunc("/send_email", sendEmail)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){
@@ -37,4 +39,10 @@ func dbCheck(w http.ResponseWriter, r *http.Request){
   database.ConnectCheck()
   fmt.Fprintf(w, "DB check")
   fmt.Println("Endpoint Hit: db check")
+}
+
+func sendEmail(w http.ResponseWriter, r *http.Request) {
+  mail.SendEmail()
+  fmt.Fprintf(w, "sen demail")
+  fmt.Println("Endpoint Hit: send email")
 }
