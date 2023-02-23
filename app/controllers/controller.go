@@ -6,7 +6,6 @@ import (
   "encoding/json"
   _ "github.com/go-sql-driver/mysql"
 
-  "app/database"
   "app/models"
   "app/mail"
 )
@@ -14,9 +13,35 @@ import (
 func HandleRequests() {
   http.HandleFunc("/", homePage)
   http.HandleFunc("/user", userPage)
-  http.HandleFunc("/db_check", dbCheck)
   http.HandleFunc("/send_email", sendEmail)
   http.HandleFunc("/get_parameters", getParameters)
+  http.HandleFunc("/users", handleUsersRequest)
+}
+
+func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
+  switch r.Method {
+  case "GET":
+    getUsers(w, r)
+  case "POST":
+  case "PUT":
+  case "DELETE":
+  default:
+    w.WriteHeader(405)
+  }
+}
+
+func getUsers(w http.ResponseWriter, r *http.Request) {
+  users, _ := model.GetUsers()
+
+  res, err := json.Marshal(users)
+  if err != nil {
+    panic(err)
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  w.Write(res)
+
+  fmt.Println("Endpoint Hit: get users")
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){
@@ -45,12 +70,6 @@ func getParameters(w http.ResponseWriter, r *http.Request) {
     fmt.Println(k, v)
   }
   fmt.Fprintf(w, "Get Parameters")
-}
-
-func dbCheck(w http.ResponseWriter, r *http.Request){
-  database.ConnectCheck()
-  fmt.Fprintf(w, "DB check")
-  fmt.Println("Endpoint Hit: db check")
 }
 
 func sendEmail(w http.ResponseWriter, r *http.Request) {

@@ -1,11 +1,8 @@
 package database
 
 import (
-	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	gorm "github.com/jinzhu/gorm"
-
-	"app/models"
 )
 
 func InitDB() *gorm.DB {
@@ -24,21 +21,10 @@ func InitDB() *gorm.DB {
 		panic(err.Error())
 	}
 
-	// マイグレーション
-	migrate(db)
-
 	return db
 }
 
 func ConnectCheck() {
   db := InitDB()
   defer db.Close()
-
-  var users []model.User
-  db.Find(&users)
-  fmt.Println(users)
-}
-
-func migrate(db *gorm.DB) {
-  db.AutoMigrate(&model.Product{})
 }

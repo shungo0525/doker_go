@@ -2,6 +2,8 @@ package model
 
 import (
 	gorm "github.com/jinzhu/gorm"
+
+	"app/database"
 )
 
 type User struct {
@@ -13,4 +15,18 @@ type Product struct {
   gorm.Model
   Code  string
   Price uint
+}
+
+func Migrate() {
+  db := database.InitDB()
+  db.AutoMigrate(&Product{})
+}
+
+func GetUsers() ([]User, error) {
+  db := database.InitDB()
+
+	var users []User
+	err := db.Find(&users).Error
+
+	return users, err
 }
