@@ -16,6 +16,7 @@ func HandleRequests() {
   http.HandleFunc("/user", userPage)
   http.HandleFunc("/db_check", dbCheck)
   http.HandleFunc("/send_email", sendEmail)
+  http.HandleFunc("/get_parameters", getParameters)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){
@@ -33,6 +34,17 @@ func userPage(w http.ResponseWriter, r *http.Request){
   w.Write(res)
 
   fmt.Println("Endpoint Hit: userPage")
+}
+
+func getParameters(w http.ResponseWriter, r *http.Request) {
+  if err := r.ParseForm(); err != nil {
+    fmt.Println("parameter parse error")
+  }
+
+  for k, v := range r.Form {
+    fmt.Println(k, v)
+  }
+  fmt.Fprintf(w, "Get Parameters")
 }
 
 func dbCheck(w http.ResponseWriter, r *http.Request){
