@@ -24,6 +24,9 @@ func InitDB() *gorm.DB {
 		panic(err.Error())
 	}
 
+	// マイグレーション
+	migrate(db)
+
 	return db
 }
 
@@ -34,4 +37,8 @@ func ConnectCheck() {
   var users []model.User
   db.Find(&users)
   fmt.Println(users)
+}
+
+func migrate(db *gorm.DB) {
+  db.AutoMigrate(&model.Product{})
 }
