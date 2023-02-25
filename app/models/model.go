@@ -30,3 +30,12 @@ func GetUsers() ([]User, error) {
 
 	return users, err
 }
+
+func PostUser(name string) (User, error) {
+  db := database.InitDB()
+
+  user := User{Name: name}
+  err := db.Create(&user).Error
+
+  return user, err
+}

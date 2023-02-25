@@ -23,6 +23,7 @@ func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
   case "GET":
     getUsers(w, r)
   case "POST":
+    postUser(w, r)
   case "PUT":
   case "DELETE":
   default:
@@ -42,6 +43,21 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
   w.Write(res)
 
   fmt.Println("Endpoint Hit: get users")
+}
+
+func postUser(w http.ResponseWriter, r *http.Request) {
+  name := r.FormValue("name")
+
+  user, err := model.PostUser(name)
+  res, err := json.Marshal(user)
+
+  if err != nil {
+    panic(err)
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  w.Write(res)
+  fmt.Println("Endpoint Hit: post user")
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){
