@@ -45,3 +45,9 @@ func PutUser(id int, name string) (User, error) {
 
   return user, err
 }
+
+func DeleteUser(id int) (error) {
+  err := db.Where("id = ?", id).Delete(&User{}).Error
+
+  return err
+}

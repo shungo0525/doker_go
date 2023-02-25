@@ -30,6 +30,7 @@ func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
   case "PUT":
     putUser(w, r)
   case "DELETE":
+    deleteUser(w, r)
   default:
     w.WriteHeader(405)
   }
@@ -84,6 +85,22 @@ func putUser(w http.ResponseWriter, r *http.Request) {
 
   w.Write(res)
   fmt.Println("Endpoint Hit: put user")
+}
+
+func deleteUser(w http.ResponseWriter, r *http.Request) {
+  id, err := strconv.Atoi(path.Base(r.URL.Path))
+  if err != nil {
+    w.WriteHeader(400)
+    return
+  }
+
+  if err := model.DeleteUser(id); err != nil {
+    w.WriteHeader(400)
+    return
+  }
+
+  w.Write([]byte("ok"))
+  fmt.Println("Endpoint Hit: delete user")
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){
