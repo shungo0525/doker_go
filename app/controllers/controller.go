@@ -21,6 +21,8 @@ func HandleRequests() {
 }
 
 func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
+  w.Header().Set("Content-Type", "application/json")
+
   switch r.Method {
   case "GET":
     getUsers(w, r)
@@ -42,9 +44,7 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
     panic(err)
   }
 
-  w.Header().Set("Content-Type", "application/json")
   w.Write(res)
-
   fmt.Println("Endpoint Hit: get users")
 }
 
@@ -58,7 +58,6 @@ func postUser(w http.ResponseWriter, r *http.Request) {
     panic(err)
   }
 
-  w.Header().Set("Content-Type", "application/json")
   w.Write(res)
   fmt.Println("Endpoint Hit: post user")
 }
@@ -84,7 +83,6 @@ func putUser(w http.ResponseWriter, r *http.Request) {
     panic(err)
   }
 
-  w.Header().Set("Content-Type", "application/json")
   w.Write(res)
   fmt.Println("Endpoint Hit: put user")
 }
