@@ -17,14 +17,13 @@ type Product struct {
   Price uint
 }
 
+var db = database.InitDB()
+
 func Migrate() {
-  db := database.InitDB()
   db.AutoMigrate(&Product{})
 }
 
 func GetUsers() ([]User, error) {
-  db := database.InitDB()
-
 	var users []User
 	err := db.Find(&users).Error
 
@@ -32,8 +31,6 @@ func GetUsers() ([]User, error) {
 }
 
 func PostUser(name string) (User, error) {
-  db := database.InitDB()
-
   user := User{Name: name}
   err := db.Create(&user).Error
 
