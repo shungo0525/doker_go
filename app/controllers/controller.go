@@ -4,6 +4,8 @@ import (
   "fmt"
   "net/http"
   "encoding/json"
+  "path"
+  "strconv"
   _ "github.com/go-sql-driver/mysql"
 
   "app/models"
@@ -15,7 +17,7 @@ func HandleRequests() {
   http.HandleFunc("/user", userPage)
   http.HandleFunc("/send_email", sendEmail)
   http.HandleFunc("/get_parameters", getParameters)
-  http.HandleFunc("/users", handleUsersRequest)
+  http.HandleFunc("/users/", handleUsersRequest)
 }
 
 func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +27,7 @@ func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
   case "POST":
     postUser(w, r)
   case "PUT":
+    putUser(w, r)
   case "DELETE":
   default:
     w.WriteHeader(405)
@@ -58,6 +61,32 @@ func postUser(w http.ResponseWriter, r *http.Request) {
   w.Header().Set("Content-Type", "application/json")
   w.Write(res)
   fmt.Println("Endpoint Hit: post user")
+}
+
+func putUser(w http.ResponseWriter, r *http.Request) {
+  id, err := strconv.Atoi(path.Base(r.URL.Path))
+  if err != nil {
+    fmt.Println(err)
+    w.WriteHeader(400)
+    return
+  }
+
+  name := r.FormValue("name")
+  user, err := model.PutUser(id, name)
+
+  if user.Id == 0 {
+    w.Write([]byte("update failure"))
+    return
+  }
+
+  res, err := json.Marshal(user)
+  if err != nil {
+    panic(err)
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  w.Write(res)
+  fmt.Println("Endpoint Hit: put user")
 }
 
 func homePage(w http.ResponseWriter, r *http.Request){

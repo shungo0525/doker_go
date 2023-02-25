@@ -36,3 +36,12 @@ func PostUser(name string) (User, error) {
 
   return user, err
 }
+
+func PutUser(id int, name string) (User, error) {
+  err := db.Model(&User{}).Where("id = ?", id).Update("name", name).Error
+
+  user := User{}
+  db.Where("id = ?", id).Take(&user)
+
+  return user, err
+}
