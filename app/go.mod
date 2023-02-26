@@ -8,4 +8,9 @@ require (
 	golang.org/x/tour v0.1.0
 )
 
-require github.com/jinzhu/inflection v1.0.0 // indirect
+require (
+	github.com/PuerkitoBio/goquery v1.8.1 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	golang.org/x/net v0.7.0 // indirect
+)
