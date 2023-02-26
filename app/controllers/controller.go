@@ -39,7 +39,7 @@ func handleUsersRequest(w http.ResponseWriter, r *http.Request) {
 func getUsers(w http.ResponseWriter, r *http.Request) {
   users, _ := model.GetUsers()
 
-  res, err := json.Marshal(users)
+  res, err := json.MarshalIndent(users, "", " ")
   if err != nil {
     panic(err)
   }
