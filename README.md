@@ -15,6 +15,12 @@
 % docker-compose exec app go run main.go
 ```
 
+- test実行
+
+```
+% go test ./utils/ -covermode=count -coverprofile=coverage.out -v
+% go tool cover -html=coverage.out -o coverage.html
+```
 
 ## Mysqlコンテナ
 ```
