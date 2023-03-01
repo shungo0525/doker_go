@@ -19,7 +19,7 @@ type Item struct {
 }
 
 type Response struct {
-	Status string `json:"Status"`
+	StatusCode int `json:"statusCode"`
 }
 
 // NOTE: ねこ画像取得API
@@ -31,6 +31,7 @@ func main() {
 
   // lambdaで実行する場合
   lambda.Start(hello)
+//   parrot()
 }
 
 func sub_main() {
@@ -41,7 +42,48 @@ func sub_main() {
 
 func hello() (Response, error) {
   sub_main()
-	return Response{Status: fmt.Sprintf("ok")}, nil
+	return Response{StatusCode: 200}, nil
+}
+
+func parrot() {
+  http.HandleFunc("/", lineHandler)
+  log.Fatal(http.ListenAndServe(":8000", nil))
+}
+
+func lineHandler(w http.ResponseWriter, r *http.Request) {
+  msg := "Hello World!!!!"
+  fmt.Fprintf(w, msg)
+
+  godotenv.Load(".env")
+  bot, err := linebot.New(os.Getenv("LINE_BOT_CHANNEL_SECRET"),os.Getenv("LINE_BOT_CHANNEL_TOKEN"))
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  // リクエストからBOTのイベントを取得
+  events, err := bot.ParseRequest(r)
+  if err != nil {
+    if err == linebot.ErrInvalidSignature {
+      w.WriteHeader(400)
+    } else {
+      w.WriteHeader(500)
+    }
+    return
+  }
+  for _, event := range events {
+    // イベントがメッセージの受信だった場合
+    if event.Type == linebot.EventTypeMessage {
+      url := get_url()
+      // NOTE: 画像メッセージ生成
+      responseImage := linebot.NewImageMessage(url, url)
+
+      // NOTE: 友達登録しているユーザー全員に画像を配信する
+      if _, err := bot.BroadcastMessage(responseImage).Do(); err != nil {
+        log.Fatal(err)
+      }
+    }
+  }
+  return
 }
 
 func get_url() (url string) {
