@@ -10,6 +10,7 @@ import (
 
   "github.com/line/line-bot-sdk-go/v7/linebot"
   "github.com/joho/godotenv"
+  "github.com/aws/aws-lambda-go/lambda"
 )
 
 type Item struct {
@@ -17,13 +18,30 @@ type Item struct {
   Url   string `json:"url"`
 }
 
+type Response struct {
+	Status string `json:"Status"`
+}
+
 // NOTE: ねこ画像取得API
 const URL = "https://api.thecatapi.com/v1/images/search"
 
 func main() {
+  // ローカルで実行する場合
+//   sub_main()
+
+  // lambdaで実行する場合
+  lambda.Start(hello)
+}
+
+func sub_main() {
   url := get_url()
   fmt.Println(url)
   send_linebot(url)
+}
+
+func hello() (Response, error) {
+  sub_main()
+	return Response{Status: fmt.Sprintf("ok")}, nil
 }
 
 func get_url() (url string) {

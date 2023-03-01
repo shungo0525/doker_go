@@ -2,6 +2,7 @@
 ```
 % GOOS=linux go build -o handler handler.go
 % zip function.zip line_bot
+% aws lambda update-function-code --function-name LineBot --zip-file fileb://function.zip
 ```
 
 - zipファイルをlambdaにアップロードする
